@@ -78,3 +78,34 @@ func CreateTask(c *fiber.Ctx) error {
 		"data":    task,
 	})
 }
+
+func UpdateTask(c *fiber.Ctx) error {
+	task := new(models.Task)
+	id := c.Params("taskId")
+
+	if err := c.BodyParser(task); err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"success": false,
+			"message": "review your inputs",
+			"data":    err,
+		})
+	}
+
+	if validationErrors := helpers.Validate(*task); validationErrors != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"success": false,
+			"message": "validation errors",
+			"data":    validationErrors,
+		})
+	}
+
+	// updating task
+	db := config.DB
+	db.Where("id = ?", id).Updates(&task)
+
+	return c.JSON(fiber.Map{
+		"success": true,
+		"message": "Updated task",
+		"data":    task,
+	})
+}
