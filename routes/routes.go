@@ -13,4 +13,5 @@ func SetupApiRoutes(app *fiber.App) {
 	tasks.Post("/", controllers.CreateTask)
 	tasks.Get("/:taskId", controllers.GetTask)
 	tasks.Put("/:taskId", controllers.UpdateTask)
+	tasks.Delete("/:taskId", controllers.DestoryTask)
 }

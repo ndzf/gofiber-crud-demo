@@ -109,3 +109,24 @@ func UpdateTask(c *fiber.Ctx) error {
 		"data":    task,
 	})
 }
+
+func DestoryTask(c *fiber.Ctx) error {
+	id := c.Params("taskId")
+	var task models.Task
+
+	result := config.DB.Delete(&task, id)
+
+	if result.RowsAffected == 0 {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+			"success": false,
+			"message": "no task present",
+			"data":    nil,
+		})
+	}
+
+	return c.JSON(fiber.Map{
+		"success": true,
+		"message": "Deleted task",
+		"data":    nil,
+	})
+}
