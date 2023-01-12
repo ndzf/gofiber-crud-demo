@@ -5,6 +5,7 @@ import (
 	"log"
 	"strconv"
 
+	"github.com/ndzf/gofiber-crud-demo.git/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -30,4 +31,7 @@ func ConnectDatabase() {
 	DB = Database
 
 	fmt.Printf("Connecting to %s", Database.Name())
+
+	/** ------ Migrations ------ **/
+	Database.AutoMigrate(&models.Task{})
 }
