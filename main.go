@@ -12,7 +12,8 @@ func main() {
 
 	config.ConnectDatabase()
 
-	app.Get("/", controllers.GetTasks)
+	tasks := app.Group("/tasks")
+	tasks.Get("/", controllers.GetTasks)
 
 	app.Listen(":3000")
 }
