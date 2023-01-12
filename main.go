@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/ndzf/gofiber-crud-demo.git/config"
+	"github.com/ndzf/gofiber-crud-demo.git/controllers"
 )
 
 func main() {
@@ -11,9 +12,7 @@ func main() {
 
 	config.ConnectDatabase()
 
-	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Hello")
-	})
+	app.Get("/", controllers.GetTasks)
 
 	app.Listen(":3000")
 }
